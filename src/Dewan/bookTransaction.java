@@ -696,8 +696,9 @@ public class bookTransaction {
 		Thread.sleep(2000);
 
 		WebElement ccButton = driver.findElement(
-				By.xpath("//*[@id=\"MainContent_DivActionbarDetails\"]/div/fieldset/div[10]/div[1]/span[1]"));
+				By.xpath("//*[@id=\"MainContent_rdchkCopy\"]"));
 		ccButton.click();
+		Thread.sleep(2000);
 		WebElement addDirectedButton1 = driver.findElement(By.xpath("//*[@id=\"ctl00_MainContent_btnAddHierarchy\"]"));
 		addDirectedButton1.click();
 		Thread.sleep(2000);
@@ -955,9 +956,9 @@ public class bookTransaction {
 		String actualCompSubjectName1 = subjectNameOnCompletedTasks1.getText();
 		String expectedCompSubjectName1 = sendToSubject;
 		myAssertion.assertEquals(actualCompSubjectName1, expectedCompSubjectName1);
-		myAssertion.assertEquals(ActualGetExpiryDate1, getExpiryDate);
+		myAssertion.assertEquals(ActualGetExpiryDate1, afterOneWeek);
 		System.out.println("the actual expiry date is " + ActualGetExpiryDate1);
-		System.out.println("the expected expiry date is " + getExpiryDate);
+		System.out.println("the expected expiry date is " + afterOneWeek);
 
 		WebElement logOutButton1 = driver.findElement(By.xpath("//*[@id=\"ctl00_RadMenu1\"]/ul/li[10]/a/span"));
 		logOutButton1.click();
@@ -1056,6 +1057,18 @@ public class bookTransaction {
 		finalSave.click();
 
 		Thread.sleep(2000);
+		
+		WebElement directingButton = driver.findElement(By.xpath("//*[@id=\"MainContent_summary1\"]"));
+		directingButton.click();
+		
+		WebElement closeButton = driver.findElement(By.xpath("//*[@id=\"ctl00_MainContent_btnCloseProcess\"]"));
+		closeButton.click();
+		
+		// Switch to the alert
+				Alert alert = driver.switchTo().alert();
+				alert.accept();
+				driver.switchTo().defaultContent();
+				Thread.sleep(3000);
 
 		// assertion on the status : should be "تمت العملية بنجاح" before directing
 		WebElement myTasks = driver.findElement(By.xpath("//*[@id=\"ctl00_RadMenu1\"]/ul/li[3]/a/span"));
@@ -1085,8 +1098,8 @@ public class bookTransaction {
 				.findElement(By.xpath("//*[@id=\"ctl00_MainContent_RadGrid1_ctl00_ctl04_TaskUrl\"]"));
 		showButton.click();
 
-		WebElement directingButton = driver.findElement(By.xpath("//*[@id=\"MainContent_summary1\"]"));
-		directingButton.click();
+		WebElement directingButton1 = driver.findElement(By.xpath("//*[@id=\"MainContent_summary1\"]"));
+		directingButton1.click();
 //
 //		// fill the date
 //		WebElement dateField = driver.findElement(By.xpath("//*[@id=\"ctl00_MainContent_txtDate_dateInput\"]"));
@@ -1124,8 +1137,9 @@ public class bookTransaction {
 		Thread.sleep(2000);
 
 		WebElement ccButton = driver.findElement(
-				By.xpath("//*[@id=\"MainContent_DivActionbarDetails\"]/div/fieldset/div[10]/div[1]/span[1]"));
+				By.xpath("//*[@id=\"MainContent_rdchkCopy\"]"));
 		ccButton.click();
+		Thread.sleep(2000);
 		WebElement addDirectedButton1 = driver.findElement(By.xpath("//*[@id=\"ctl00_MainContent_btnAddHierarchy\"]"));
 		addDirectedButton1.click();
 		Thread.sleep(2000);
@@ -1205,12 +1219,12 @@ public class bookTransaction {
 		String sendToSubjectOfDirectedBook = "Asmar correspondence test" + myRand.nextInt(100);
 		WebElement notesButton = driver.findElement(By.xpath("//*[@id=\"txtNote\"]"));
 		notesButton.sendKeys(sendToSubjectOfDirectedBook);
-		WebElement closeButton = driver.findElement(By.xpath("//*[@id=\"ctl00_MainContent_btnCloseProcess\"]/span[1]"));
-		closeButton.click();
+		WebElement closeButton1 = driver.findElement(By.xpath("//*[@id=\"ctl00_MainContent_btnCloseProcess\"]/span[1]"));
+		closeButton1.click();
 
 		// Switch to the alert
-		Alert alert = driver.switchTo().alert();
-		alert.accept();
+		Alert alert1 = driver.switchTo().alert();
+		alert1.accept();
 		driver.switchTo().defaultContent();
 		Thread.sleep(3000);
 
