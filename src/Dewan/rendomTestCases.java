@@ -6,6 +6,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -17,9 +18,11 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
+
 public class rendomTestCases {
 
-	WebDriver driver = new ChromeDriver();
+	WebDriver driver;
 	SoftAssert myAssertion = new SoftAssert();
 	Random myRand = new Random();
 
@@ -30,12 +33,16 @@ public class rendomTestCases {
 	// Format the date as per the desired format
 	String formattedDate = today.format(formatter);
 	String afterOneWeek = today.plusWeeks(1).format(formatter);
-	Actions actions = new Actions(driver);
+	
 	
 	private int invocationCount = 0;
 	String uniqueId = "ID_" + Instant.now().toEpochMilli();
 	@BeforeTest
 	public void beforeLogin() {
+		
+		 // Set up ChromeDriver using WebDriverManager
+        WebDriverManager.chromedriver().setup();
+        driver = new ChromeDriver();
 		driver.get("http://localhost:3333/login");
 		driver.manage().window().maximize();
 
@@ -58,7 +65,7 @@ public class rendomTestCases {
 
 		// check if message of other login exist shown and click ok
 		try {
-			driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
+			driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 			WebElement confirmLoginButton = driver.findElement(By.xpath("//button[contains(text(),'نعم')]"));
 			confirmLoginButton.click();
 		} catch (Exception e) {
@@ -194,7 +201,7 @@ public class rendomTestCases {
 	@Test ()
 	public void tsksFollowsTest () throws InterruptedException {
 		WebElement enterProcess = driver.findElement(By.xpath("//*[@id=\"ctl00_RadMenu1\"]/ul/li[1]/span"));
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 		enterProcess.click();
 
 		WebElement createCorrespondence = driver

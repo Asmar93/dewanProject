@@ -4,6 +4,7 @@ import org.testng.annotations.Test;
 import org.testng.AssertJUnit;
 import java.time.Duration;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -12,13 +13,20 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.BeforeTest;
 import org.testng.asserts.SoftAssert;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
+
 public class loginPage {
-	WebDriver driver = new ChromeDriver();
+	
+	
 	SoftAssert myAssertion = new SoftAssert();
 	Random myRand = new Random();
 	
+	WebDriver driver;
 	@BeforeTest 
 	public void beforeLogin () {
+		 // Set up ChromeDriver using WebDriverManager
+        WebDriverManager.chromedriver().setup();
+        driver = new ChromeDriver();
 		driver.get("http://localhost:3333/login");
 		driver.manage().window().maximize();
 	}
@@ -30,7 +38,7 @@ public class loginPage {
 		// To login
 
 		String userName = "Ohoud.AlJaafari";
-		String passWord = "s";
+		String passWord = "Aa1";
 		WebElement userInput = driver.findElement(By.xpath("//*[@id=\"tbxName\"]"));
 		WebElement passInput = driver.findElement(By.xpath("//*[@id=\"tbxPassword\"]"));
 		WebElement login = driver.findElement(By.xpath("//*[@id=\"btnlogin\"]"));
@@ -41,14 +49,14 @@ public class loginPage {
 		passInput.sendKeys(passWord);
 		login.click();
 		try {
-			driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
+			driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 			WebElement confirmLoginButton = driver.findElement(By.xpath("//button[contains(text(),'نعم')]"));
 			confirmLoginButton.click();
 		} catch (Exception e) {
 			// the user will login normally
 			
 		}
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
+		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 		WebElement userField = driver.findElement(By.xpath("//*[@id=\"ctl00_RadMenu1\"]/ul/li[9]/a/span"));
 		userField.click();
 		WebElement userNameField = driver.findElement(By.xpath("//*[@id=\"MainContent_tbxUserName\"]"));
@@ -85,7 +93,7 @@ public class loginPage {
 		passInput.sendKeys(passWord);
 		login.click();
 		try {
-			driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
+			driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 			WebElement confirmLoginButton = driver.findElement(By.xpath("//button[contains(text(),'نعم')]"));
 			confirmLoginButton.click();
 		} catch (Exception e) {

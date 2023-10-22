@@ -2,13 +2,14 @@ package Dewan;
 
 import org.testng.annotations.Test;
 import java.awt.Color;
-import java.time.Duration;
+
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -20,9 +21,11 @@ import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.BeforeTest;
 import org.testng.asserts.SoftAssert;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
+
 public class bookTransaction {
 
-	WebDriver driver = new ChromeDriver();
+	
 	SoftAssert myAssertion = new SoftAssert();
 	Random myRand = new Random();
 
@@ -33,10 +36,16 @@ public class bookTransaction {
 	// Format the date as per the desired format
 	String formattedDate = today.format(formatter);
 	String afterOneWeek = today.plusWeeks(1).format(formatter);
-	Actions actions = new Actions(driver);
+	WebDriver driver;
+	
 
 	@BeforeTest
 	public void beforeLogin() {
+		
+		 // Set up ChromeDriver using WebDriverManager
+        WebDriverManager.chromedriver().setup();
+        driver = new ChromeDriver();
+        
 		driver.get("http://localhost:3333/login");
 		driver.manage().window().maximize();
 
@@ -59,7 +68,7 @@ public class bookTransaction {
 
 		// check if message of other login exist shown and click ok
 		try {
-			driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
+			driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 			WebElement confirmLoginButton = driver.findElement(By.xpath("//button[contains(text(),'نعم')]"));
 			confirmLoginButton.click();
 		} catch (Exception e) {
@@ -73,7 +82,7 @@ public class bookTransaction {
 
 		// create new generalization
 		WebElement enterProcess = driver.findElement(By.xpath("//*[@id=\"ctl00_RadMenu1\"]/ul/li[1]/span"));
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 		enterProcess.click();
 
 		WebElement createGeneralization = driver
@@ -163,7 +172,7 @@ public class bookTransaction {
 
 		// check if message of other login exist shown and click ok
 		try {
-			driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
+			driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 			WebElement confirmLoginButton = driver.findElement(By.xpath("//button[contains(text(),'نعم')]"));
 			confirmLoginButton.click();
 		} catch (Exception e) {
@@ -211,7 +220,7 @@ public class bookTransaction {
 
 		// check if message of other login exist shown and click ok
 		try {
-			driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
+			driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 			WebElement confirmLoginButton = driver.findElement(By.xpath("//button[contains(text(),'نعم')]"));
 			confirmLoginButton.click();
 		} catch (Exception e) {
@@ -228,7 +237,7 @@ public class bookTransaction {
 
 		// create new outgoing
 		WebElement enterProcess = driver.findElement(By.xpath("//*[@id=\"ctl00_RadMenu1\"]/ul/li[1]/span"));
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 		enterProcess.click();
 
 		WebElement createOutGoing = driver
@@ -331,7 +340,7 @@ public class bookTransaction {
 		receivedUsersButton.click();
 
 		try {
-			driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
+			driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 			WebElement receivedUser = driver
 					.findElement(By.xpath("//*[@id=\"ctl00_MainContent_GVUserAssign_ctl00__0\"]/td[2]"));
 			String getUserArName = receivedUser.getText();
@@ -353,7 +362,7 @@ public class bookTransaction {
 
 			// check if message of other login exist shown and click ok
 			try {
-				driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+				driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 				WebElement confirmLoginButton = driver.findElement(By.xpath("/html/body/div/div/div[10]/button[1]"));
 				confirmLoginButton.click();
 			} catch (Exception e) {
@@ -389,7 +398,7 @@ public class bookTransaction {
 
 			// check if message of other login exist shown and click ok
 			try {
-				driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
+				driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 				WebElement confirmLoginButton = driver.findElement(By.xpath("//button[contains(text(),'نعم')]"));
 				confirmLoginButton.click();
 			} catch (Exception e) {
@@ -450,7 +459,7 @@ public class bookTransaction {
 
 			// check if message of other login exist shown and click ok
 			try {
-				driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
+				driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 				WebElement confirmLoginButton = driver.findElement(By.xpath("//button[contains(text(),'نعم')]"));
 				confirmLoginButton.click();
 			} catch (Exception e) {
@@ -470,7 +479,7 @@ public class bookTransaction {
 
 		// create new outgoing
 		WebElement enterProcess = driver.findElement(By.xpath("//*[@id=\"ctl00_RadMenu1\"]/ul/li[1]/span"));
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 		enterProcess.click();
 
 		WebElement createOutGoing = driver
@@ -547,7 +556,7 @@ public class bookTransaction {
 
 		WebElement sendingButton = driver.findElement(By.xpath("//*[@id=\"MainContent_summary1\"]"));
 		sendingButton.click();
-
+		Actions actions = new Actions(driver);
 		actions.sendKeys(Keys.PAGE_DOWN).perform();
 		actions.sendKeys(Keys.PAGE_DOWN).perform();
 		Thread.sleep(2000);
@@ -562,7 +571,7 @@ public class bookTransaction {
 		Alert alert = driver.switchTo().alert();
 		alert.accept();
 		driver.switchTo().defaultContent();
-		Thread.sleep(2000);
+		Thread.sleep(30000);
 		WebElement unwatchedGenButton = driver.findElement(By.xpath("//*[@id=\"ctl00_RadMenu1\"]/ul/li[5]"));
 		unwatchedGenButton.click();
 
@@ -583,12 +592,12 @@ public class bookTransaction {
 	public void incomingTest() throws InterruptedException {
 
 		WebElement enterProcess = driver.findElement(By.xpath("//*[@id=\"ctl00_RadMenu1\"]/ul/li[1]/span"));
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 		enterProcess.click();
 
 		WebElement createInComing = driver
 				.findElement(By.xpath("//*[@id=\"ctl00_RadMenu1\"]/ul/li[1]/div/div/ul/li[4]/a"));
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 		createInComing.click();
 
 		// fill the subject
@@ -655,6 +664,12 @@ public class bookTransaction {
 		// final save
 		WebElement finalSave = driver.findElement(By.xpath("//*[@id=\"ctl00_MainContent_btnSave\"]"));
 		finalSave.click();
+		
+		
+		
+//		boolean actualFindSaveButton = finalSave.isDisplayed();
+//		boolean expectFinSaveButton = false;
+//		myAssertion.assertEquals(actualFindSaveButton,expectFinSaveButton, "save button existing");
 
 		// Directing process
 		WebElement directingButton = driver.findElement(By.xpath("//*[@id=\"MainContent_summary1\"]"));
@@ -757,6 +772,7 @@ public class bookTransaction {
 
 		WebElement receivedUsersButton = driver.findElement(By.xpath("//*[@id=\"MainContent_summary2\"]"));
 		receivedUsersButton.click();
+		Actions actions = new Actions(driver);
 		actions.sendKeys(Keys.PAGE_DOWN).perform();
 		actions.sendKeys(Keys.PAGE_DOWN).perform();
 		WebElement receivedUserTask = driver
@@ -788,7 +804,7 @@ public class bookTransaction {
 
 		// check if message of other login exist shown and click ok
 		try {
-			driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+			driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 			WebElement confirmLoginButton = driver.findElement(By.xpath("/html/body/div/div/div[10]/button[1]"));
 			confirmLoginButton.click();
 		} catch (Exception e) {
@@ -834,7 +850,7 @@ public class bookTransaction {
 
 		// check if message of other login exist shown and click ok
 		try {
-			driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
+			driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 			WebElement confirmLoginButton = driver.findElement(By.xpath("//button[contains(text(),'نعم')]"));
 			confirmLoginButton.click();
 		} catch (Exception e) {
@@ -894,7 +910,7 @@ public class bookTransaction {
 
 		// check if message of other login exist shown and click ok
 		try {
-			driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
+			driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 			WebElement confirmLoginButton = driver.findElement(By.xpath("//button[contains(text(),'نعم')]"));
 			confirmLoginButton.click();
 		} catch (Exception e) {
@@ -980,7 +996,7 @@ public class bookTransaction {
 
 		// check if message of other login exist shown and click ok
 		try {
-			driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
+			driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 			WebElement confirmLoginButton = driver.findElement(By.xpath("//button[contains(text(),'نعم')]"));
 			confirmLoginButton.click();
 		} catch (Exception e) {
@@ -1017,7 +1033,7 @@ public class bookTransaction {
 	public void internalCorrespondenceTest() throws InterruptedException {
 
 		WebElement enterProcess = driver.findElement(By.xpath("//*[@id=\"ctl00_RadMenu1\"]/ul/li[1]/span"));
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 		enterProcess.click();
 
 		WebElement createCorrespondence = driver
@@ -1191,7 +1207,7 @@ public class bookTransaction {
 
 		// check if message of other login exist shown and click ok
 		try {
-			driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
+			driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 			WebElement confirmLoginButton = driver.findElement(By.xpath("//button[contains(text(),'نعم')]"));
 			confirmLoginButton.click();
 		} catch (Exception e) {
@@ -1256,7 +1272,7 @@ public class bookTransaction {
 
 		// check if message of other login exist shown and click ok
 		try {
-			driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
+			driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 			WebElement confirmLoginButton = driver.findElement(By.xpath("//button[contains(text(),'نعم')]"));
 			confirmLoginButton.click();
 		} catch (Exception e) {
@@ -1307,7 +1323,7 @@ public class bookTransaction {
 
 				// check if message of other login exist shown and click ok
 				try {
-					driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
+					driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 					WebElement confirmLoginButton = driver.findElement(By.xpath("//button[contains(text(),'نعم')]"));
 					confirmLoginButton.click();
 				} catch (Exception e) {

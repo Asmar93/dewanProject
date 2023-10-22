@@ -5,6 +5,7 @@
     <classes>
       <class name="Dewan.bookTransaction">
         <methods>
+          <include name="incomingTest"/>
           <include name="beforeLogin"/>
           <include name="internalCorrespondenceTest"/>
         </methods>
